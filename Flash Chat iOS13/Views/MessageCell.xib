@@ -76,10 +76,10 @@
         <image name="MeAvatar" width="36" height="36"/>
         <image name="YouAvatar" width="36" height="36"/>
         <namedColor name="BrandLightPurple">
-            <color red="0.77996697713205643" green="0.9936332106590271" blue="0.97116748831254274" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.77999997138977051" green="0.99400001764297485" blue="0.97100001573562622" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="BrandPurple">
-            <color red="0.30931657552719116" green="0.62192493677139282" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.30899998545646667" green="0.62199997901916504" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

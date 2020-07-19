@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct Message {
+struct Message{
     let sender : String
     let body : String
+    let profileImage : String?
+    let image : String?
+    let date : TimeInterval
 }

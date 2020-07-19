@@ -23,42 +23,43 @@ class ChatViewController: UIViewController {
         title = K.appName
         navigationItem.hidesBackButton = true
         tableView.register(UINib(nibName: K.cellNibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
-        loadMessages()
+//        loadMessages()
     }
     
-    func loadMessages() {
-        db.collection(K.FStore.collectionName)
-            .order(by: K.FStore.dateField)
-            .addSnapshotListener { (querySnapshot, error) in
-            self.messages = []
-            if let e = error{
-                print("Something went wrong could not fetch messages. Error: \(e)")
-            }
-            else{
-                if let snapshotDocuments = querySnapshot?.documents{
-                    for doc in snapshotDocuments{
-                        let data = doc.data()
-                        if let messageSender = data[K.FStore.senderField] as? String, let messageBody = data[K.FStore.bodyField] as? String{
-                            let newMessage = Message(sender: messageSender, body: messageBody)
-                            self.messages.append(newMessage)
-                            DispatchQueue.main.async {
-                                self.tableView.reloadData()
-                                let indexPath = IndexPath(row: self.messages.count - 1 , section: 0)
-                                self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    func loadMessages() {
+//        db.collection(K.FStore.collectionName)
+//            .order(by: K.FStore.dateField)
+//            .addSnapshotListener { (querySnapshot, error) in
+//            self.messages = []
+//            if let e = error{
+//                print("Something went wrong could not fetch messages. Error: \(e)")
+//            }
+//            else{
+//                if let snapshotDocuments = querySnapshot?.documents{
+//                    for doc in snapshotDocuments{
+//                        let data = doc.data()
+////                        if let messageSender = data[K.FStore.senderField] as? String, let messageBody = data[K.FStore.bodyField] as? String{
+////                            let newMessage = Message(sender: messageSender, body: messageBody)
+////                            self.messages.append(newMessage)
+////                            DispatchQueue.main.async {
+////                                self.tableView.reloadData()
+////                                let indexPath = IndexPath(row: self.messages.count - 1 , section: 0)
+////                                self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+////                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
     @IBAction func sendPressed(_ sender: UIButton) {
+        
         if let messageBody = messageTextfield.text , let senderName = Auth.auth().currentUser?.email{
-            db.collection(K.FStore.collectionName).addDocument(data: [
-                K.FStore.senderField: senderName,
-                K.FStore.bodyField: messageBody,
-                K.FStore.dateField: Date().timeIntervalSince1970
-            ]) { (error) in
+            db.collection(K.FStore.contactCollection).addDocument(data: [K.FStore.contactName: senderName])
+                .collection(senderName).addDocument(data: [K.FStore.bodyField : messageBody,
+                                                                           K.FStore.senderField : senderName,
+                                                                           K.FStore.dateField : Date().timeIntervalSince1970])
+            { (error) in
                 if let e = error {
                     print("Something went wrong in adding message to Firestore. Error: \(e)")
                 }
@@ -85,7 +86,7 @@ class ChatViewController: UIViewController {
 }
 
 
-
+//MARK: - UITableViewDataSource
 extension ChatViewController:UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count

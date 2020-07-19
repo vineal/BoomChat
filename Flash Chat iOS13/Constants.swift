@@ -12,6 +12,8 @@ struct K {
     static let cellNibName = "MessageCell"
     static let registerSegue = "RegisterToChat"
     static let loginSegue = "LoginToChat"
+    static let messageSegue = "ViewMessages"
+    
     
     struct BrandColors {
         static let purple = "BrandPurple"
@@ -21,8 +23,9 @@ struct K {
     }
     
     struct FStore {
-        static let contactCollection = "contact"
-        static let collectionName = "messages"
+        static let contactCollection = "contacts"
+        static let messageCollection = "messages"
+        static let contactName = "contactName"
         static let senderField = "sender"
         static let bodyField = "body"
         static let dateField = "date"
